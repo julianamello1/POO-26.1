@@ -1,4 +1,4 @@
-package Banco.src;
+package banco;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,8 @@ public class Banco {
     public final static int TAMANHO_MAX_PRO_NOME = 10;
 
     private String nome;
+
+    public static final float salarioBase = 1000;
 
     private ArrayList<ContaCorrente> contasCorrentes;
 
