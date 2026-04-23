@@ -30,7 +30,7 @@ public class ContaCorrente {
 
     // métodos:
     public long getNumeroConta(){
-            return numeroConta; // pra conseguir acessar os dados, ja que é private
+        return numeroConta; // pra conseguir acessar os dados, ja que é private
     }
 
     public Pessoa getCorrentista(){
