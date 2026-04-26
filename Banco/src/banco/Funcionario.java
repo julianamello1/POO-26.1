@@ -31,7 +31,7 @@ public class Funcionario extends Pessoa {
 
     @Override
     public String toString(){
-        return "Nome do funcionário:" + this.getNome() + "CPF:" + this.getCpf() + "Matrícula:" + this.matricula + "Salário:" + this.salario;
+        return "\n\t\tNome do funcionário: " + this.getNome() + " | CPF: " + this.getCpf() + " | Matrícula: " + this.matricula + " | Salário: " + this.salario;
         // nome e cpf com getter pq são privados, então precisa de getter pra acessar
         // daria pra fazer um super.toString() e adicionar só o que não tem no override de Pessoa!
     }

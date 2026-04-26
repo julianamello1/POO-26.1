@@ -56,7 +56,7 @@ public class Pessoa {
         return "Nome:" + nome + "CPF:" + cpf;
     }
         /* usa override pra, na hora de printar, o Java não colocar um código
-        * feio, ele vai mostrar desse jeito aí bem bonitinho
+        * feio, ele vai mostrar desse jeito aí bem bonitinho (ou seja, override mexe no system.out.println!!
         * métod "toString" transforma um objeto em uma frase String que humanos conseguem ler */
 
 

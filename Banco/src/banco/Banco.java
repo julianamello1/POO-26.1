@@ -26,12 +26,12 @@ public class Banco {
             // cria um novo objeto do tipo gerente e coloca os parâmetros que ele recebe
 
         }
-        else {
+       // else { achei que precisava criar um objeto de funcionario, mas não pediu isso na questão
             // se o funcionário NÃO for gerente
-            novoFuncionario = new Funcionario(cpf, nome, matricula, this);
+            //novoFuncionario = new Funcionario(cpf, nome, matricula, this);
             // tive que, na classe Funcionario, colocar a variável "bancoOndeTrabalha" como o objeto Banco. O "this" se refere a isso. É o próprio objeto Banco sendo recebido
-        }
-        this.listaFuncionarios.add(novoFuncionario); // adiciona na lista
+        // }
+        this.listaFuncionarios.add(novoFuncionario); // adiciona na lista Funcionarios, sendo gerente ou nao!
     }
 
 
@@ -97,7 +97,7 @@ public class Banco {
 */
 
     public void promoverFuncionario(Funcionario funcionarioPromovido){
-        System.out.println("O funcionário" + funcionarioPromovido.getNome() + "está promovido!!! PARABÉNS! ");
+        System.out.println("\nO funcionário" + funcionarioPromovido.getNome() + "está promovido!!! PARABÉNS! ");
         // obs: getNome() sem "especificar" pega o nome de quem ta executando o código, nesse caso, classe Banco!!
 
         // cálculo do salário com a promoção:
@@ -107,7 +107,7 @@ public class Banco {
         funcionarioPromovido.setSalarioAtual(novoSalario);
             // no set salario, ele recebe um valor de salario atualizado e atualiza a gaveta de salario da classe (this.salario) pra esse valor recebido
 
-        System.out.println("\nDados do funcionário atualizados:" + funcionarioPromovido.toString());
+        System.out.println("\tDados do funcionário atualizados: " + funcionarioPromovido.toString());
             // aqui ele utiliza o override do toString que já criei na classe Funcionário
 
     }

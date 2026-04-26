@@ -27,7 +27,7 @@ public class Gerente extends Funcionario{
     }
 
     public void imprimirEquipe(){
-        System.out.println("Equipe do gerente: " + this.getNome());
+        System.out.println("\nEquipe do gerente " + this.getNome() + ":");
         // java vê que o avô dessa classe tem o getNome.
         for(Funcionario funcionario : Subordinados){ // enquanto o funcionario estiver dentro da lista de subordinados
             System.out.println(funcionario); // aparentemente java ja chama o toString automaticamente aqui
@@ -39,7 +39,7 @@ public class Gerente extends Funcionario{
         /* a classe Funcionario já tem um Override do toString que coloca cpf, nome, salário, matrícula tudo bonitinho!
         * então, ele aqui vai primeiramente pegar esse Override já feito (com ncpf, nome e matricula) e colocar aqui, adicionando as outras informações que eu
         * coloquei pros subordinados */
-        return super.toString() + " Tamanho da equipe: " + Subordinados.size();
+        return super.toString() + " | Tamanho da equipe: " + Subordinados.size();
     }
 
 }
