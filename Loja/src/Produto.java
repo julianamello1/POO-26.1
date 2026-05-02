@@ -1,3 +1,5 @@
+package src;
+
 public class Produto {
 
     protected float preco;
