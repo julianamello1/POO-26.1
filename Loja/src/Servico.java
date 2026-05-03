@@ -4,7 +4,7 @@ public class Servico {
 
     protected float preco;
     protected String descricao;
-    protected int tempoGarantia;
+    protected int tempoGarantia; // em meses
 
 
     public Servico(float preco, String descricao, int tempoGarantia){
