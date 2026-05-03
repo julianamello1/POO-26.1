@@ -7,5 +7,5 @@ composição e agregação, estruturas úteis, unit tests, tratamento de exceç�
 design patterns, convenções e boas práticas etc.
 
 
-> ↳ link do repositório original do professor, onde estão os códigos base (feitos por ele em aula) e também suas evoluções (também feitas em aula):
+> ↳ link do repositório original do professor, onde estão os códigos base (feitos por ele em aula) e suas evoluções (também feitas em aula):
   https://github.com/vigusmao/POO-2026-1.git
