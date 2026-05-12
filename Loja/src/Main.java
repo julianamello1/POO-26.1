@@ -3,7 +3,9 @@ package src;
 public class Main {
     public static void main(String[] args) {
 
-        Loja lojinha = new Loja();
+        Transportadora trasportadorinha = new Transportadora();
+        Loja lojinha = new Loja(trasportadorinha);
+
 
         Produto notebookGamer = new Produto(1500, "notebook gamer", "GusBom");
         Produto oculos3D = new Produto(300, "oculos 3D", "HighBum");
@@ -17,7 +19,7 @@ public class Main {
 
         lojinha.imprimirEstoque();
 
-        lojinha.venderProduto("camisa");
+        lojinha.venderProduto("notebookGamer", " ");
 
 
 

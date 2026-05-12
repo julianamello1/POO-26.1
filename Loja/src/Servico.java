@@ -1,6 +1,6 @@
 package src;
 
-public class Servico {
+public class Servico implements Vendavel {
 
     protected float preco;
     protected String descricao;
@@ -11,5 +11,16 @@ public class Servico {
         this.preco = preco;
         this.descricao = descricao;
         this.tempoGarantia = tempoGarantia;
+    }
+
+    @Override
+    public float getPreco() {
+        return this.preco;
+
+    }
+
+    @Override
+    public String getDescricao() {
+        return this.descricao;
     }
 }

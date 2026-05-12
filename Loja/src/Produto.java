@@ -1,6 +1,6 @@
 package src;
 
-public class Produto {
+public class Produto implements Vendavel {
 
     protected float preco;
     protected String descricao;
@@ -31,5 +31,13 @@ public class Produto {
         return "Produto: " + this.getNome() + " | Preço: R$" + this.preco;
     }
 
+    @Override
+    public float getPreco() {
+        return this.preco;
+    }
 
+    @Override
+    public String getDescricao() {
+        return this.descricao;
+    }
 }
