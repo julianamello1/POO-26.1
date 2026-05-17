@@ -1,6 +1,6 @@
 package src;
 
-public class Produto implements Vendavel {
+public class Produto implements Vendavel{
 
     protected float preco;
     protected String descricao;

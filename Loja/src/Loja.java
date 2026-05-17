@@ -2,10 +2,12 @@ package src;
 
 import java.util.ArrayList;
 
-public class Loja {
+public abstract class Loja {
+    // tornei Loja uma classe abstrata, então ela serve de "molde" pra outras, mas não pode ser instanciada
 
-    private Transportadora transportadora;
-    private ArrayList<Vendavel> listaProdutos = new ArrayList<>(); // lista aceita qualquer coisa que implemente Vendavel
+    // botei protected pra que as classes filhas dela possam acessar tbm
+    protected Transportadora transportadora;
+    protected ArrayList<Vendavel> listaProdutos = new ArrayList<>(); // lista aceita qualquer coisa que implemente Vendavel
     // em ArrayLista, é <tipo de variavel no array> nome do array = new ArrayLista<>();
 
     // criar um construtor que inicializa uma lista vazia (ou seja, não vai receber como parâmetro)
@@ -15,13 +17,17 @@ public class Loja {
         this.listaProdutos = new ArrayList<>();
         // inicializa ArrayLista toda vez que criar um objeto de Loja
         // se não fizesse, na hora de cadastrar e fazer o .add(), nao ia ter lista pra colocar!
+        this.transportadora = transportavel;
     }
 
+
+    public abstract void receberPagamento(double valor); // cria mét. abstrato, que todas as subclasses são obrigadas a ter
 
 //    void cadastrarProduto(Produto novoProduto) {
 //        listaProdutos.add(novoProduto); // nomedalista.add(nome do parametro);
 //        System.out.println("\nProduto " + novoProduto.getNome() + " cadastrado!");
 //    }
+
 
     public void cadastrarProduto(Vendavel item) { // "Eu aceito qualquer objeto, desde que a classe dele prometa (implemente) a interface Vendavel."
         listaProdutos.add(item);
@@ -41,29 +47,40 @@ public class Loja {
     public void venderProduto(String item, String endereco) {
         Vendavel itemComprado = null; // pra ficar + facil na main, essa funçao vai receber String
 
-        for (Vendavel p : listaProdutos){
-            if (p.getDescricao().equalsIgnoreCase(item)){
-                if (p instanceof Vendavel){ // se o objeto for de uma classe que implementa Vendavel, vou criar um Vendavel = String
+        for (Vendavel p : listaProdutos) { // procura o produto na lista de produtos
+            // remover os espaços tanto da descrição cadastrada quanto da buscada, pra não dar erro
+            String descricaoSemEspaco = p.getDescricao().replace(" ", "");
+            String buscaSemEspaco = item.replace(" ", "");
+            if (descricaoSemEspaco.equalsIgnoreCase(buscaSemEspaco)) {
+                if (p instanceof Vendavel) { // se o objeto for de uma classe que implementa Vendavel, vou criar um Vendavel = String
+                    // "preencho" a variavel itemComprado com o produto achado
                     itemComprado = (Vendavel) p; // meio que garanto pro java que pode sim tratar ele como Vendavel
-                    break;
+                    break; // sai do loop
                 }
             }
-            System.out.println("\n\tO produto " + itemComprado.getDescricao() + " foi vendido com sucesso!");
-            System.out.println("\n\tValor: R$ " + itemComprado.getPreco());
-
-            if (itemComprado instanceof Transportavel) {
-                if (endereco == null || endereco.isEmpty()) { // se for transportavel, mas tiver s/ endereço, ele tem que pedir!
-                    System.out.println("ERRO! Este item precisa de um endereço de destino!");
-                } else {
-                    transportadora.transportar((Transportavel) itemComprado, endereco); // como ja usou instanceof pra ver se era Transportavel, pode usar cast pra tratar como tal mesmo
-                }
-                listaProdutos.remove(item);
-            } else {
-                System.out.println("\n\tERRO! PRODUTO NÃO ESTÁ NO ESTOQUE!");
-            }
-
         }
+        if (itemComprado == null) { // se loop terminou e a variavel do itemComprado continuar null (ou seja, nao tem o produto)
+            System.out.println("\n\tERRO! PRODUTO NÃO ESTÁ NO ESTOQUE!");
+            return;
+        }
+
+        // itemComprado.receberPagamento(); -> isso aqui se receberPagamento fosse da interface Vendavel
+        System.out.println(("\n\tIniciando a venda do produto: " + itemComprado.getDescricao()));
+        System.out.println("\t\tValor: R$ " + itemComprado.getPreco() + "\n");
+
+        this.receberPagamento(itemComprado.getPreco());
+
+        if (itemComprado instanceof Transportavel) {
+            if (endereco == null || endereco.isEmpty()) { // se for transportavel, mas tiver s/ endereço, ele tem que pedir!
+                System.out.println("ERRO! Este item precisa de um endereço de destino!");
+            } else {
+                transportadora.transportar((Transportavel) itemComprado, endereco); // como ja usou instanceof pra ver se era Transportavel, pode usar cast pra tratar como tal mesmo
+            }
+        }
+        listaProdutos.remove(itemComprado);
+        System.out.println("\n\tO produto " + itemComprado.getDescricao() + " foi vendido com sucesso!");
     }
+
 //        public void imprimirEstoque () {
 //            if (this.listaProdutos.isEmpty()) {
 //                System.out.println("O estoque de tudo acabou! :o ");
@@ -75,12 +92,15 @@ public class Loja {
 //        }
 //    }
 
-        public void imprimirEstoque() {
-            System.out.println("\nInventário atual da loja: ");
+    public void imprimirEstoque() {
+        System.out.println("\nInventário atual da loja: ");
+        if (listaProdutos.isEmpty()) {
+            System.out.println("\nO estoque da loja está vazio.");
+        } else {
             for (Vendavel item : listaProdutos) {
                 System.out.println("\n\t . " + item.getDescricao() + "(R$ " + item.getPreco() + ")");
             }
         }
     }
-
+}
 

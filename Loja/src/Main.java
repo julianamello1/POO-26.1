@@ -4,13 +4,13 @@ public class Main {
     public static void main(String[] args) {
 
         Transportadora trasportadorinha = new Transportadora();
-        Loja lojinha = new Loja(trasportadorinha);
+        LojaPix lojinha = new LojaPix (trasportadorinha);
 
 
         Produto notebookGamer = new Produto(1500, "notebook gamer", "GusBom");
         Produto oculos3D = new Produto(300, "oculos 3D", "HighBum");
         Produto bermuda = new Produto(40, "bermuda azul", "Lives");
-        Livro LearnJava = new Livro(500, "livro sobre POO em Java", "livraria", "Vinicius Gusmao", 1000);
+        Livro LearnJava = new Livro(500, "livro POO em Java", "livraria", "Vinicius Gusmao", 1000);
 
         lojinha.cadastrarProduto(notebookGamer);
         lojinha.cadastrarProduto(oculos3D);
@@ -19,7 +19,7 @@ public class Main {
 
         lojinha.imprimirEstoque();
 
-        lojinha.venderProduto("notebookGamer", " ");
+        lojinha.venderProduto("livro POO em Java", "Av. Athos da Silveira Ramos, 274");
 
 
 
