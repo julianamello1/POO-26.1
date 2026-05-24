@@ -1,5 +1,3 @@
-package TestUnits;
-
 import exception.DevolucaoInvalidaException;
 import exception.LimiteEmprestimosExcedidoException;
 import exception.UsuarioNaoCadastradoException;
