@@ -1,4 +1,4 @@
-package test;
+package TestUnits;
 
 import exception.DevolucaoInvalidaException;
 import exception.LimiteEmprestimosExcedidoException;
@@ -74,6 +74,12 @@ public class BibliotecaTest {
                 5, biblioteca.getQuantidadeDeLivrosNasEstantes(livroAbundante));
         assertEquals("A aquisição de zero ou menos cópias de um livro NÃO deve modificar o total de livros na estante",
                 6, biblioteca.getQuantidadeDeLivrosNasEstantes());
+
+        // pra fazer funcionar tive que fazer um hashmap com a quantidade de livros(por livro específico).
+        // na função de adquirir livro, fiz uma condição para não deixar uma quantidade adquiritda negativa (se fosse, dava só return - que sai da função sem fazer nada)
+        // a variavel de quantidade atual pegava a quantidade por livro ja adquirida ou default (0) se não tivesse nenhum
+        // no hashmap da quantidade por livro, coloquei a quantidade atual + quantidade adquirida
+        // então, somei o total dele na estante com a quantidade adquirida
     }
 
     @Test
@@ -85,7 +91,7 @@ public class BibliotecaTest {
 
         assertEquals("A consulta de quantidade deve retornar corretamente mesmo quando o parâmetro é outra instância",
                 5, biblioteca.getQuantidadeDeLivrosNasEstantes(outraInstanciaDeLivroQueJaExiste));
-    }
+    } // fiz um override do equals de hashmap (fazendo o .equals pras strings das outras instancias). foi pela IDE mesmo!
 
     @Test
     public void testeGetQuantidadeDeLivrosNaEstanteParaLivroInexistente() {
@@ -98,6 +104,7 @@ public class BibliotecaTest {
         Pessoa novaInstanciaDoMesmoUsuario = new Pessoa("Qualquer Nome", cpfUsuario1);
         assertEquals("Dois usuários com o mesmo CPF devem ser considerados iguais",
                 novaInstanciaDoMesmoUsuario, usuario);
+        // fiz tbm um override do .equals do tostring e hashmap, mas so habilitei o cpf
     }
 
     @Test
@@ -146,6 +153,8 @@ public class BibliotecaTest {
                 0, biblioteca.getQuantidadeDeLivrosDevidos(usuario));
         assertEquals("A devolução de um livro deve atualizar a quantidade daquele livro na estante",
                 5, biblioteca.getQuantidadeDeLivrosNasEstantes(livroAbundante));
+
+        // implementei os métodos de emprestimo e devoluçao
     }
 
     @Test

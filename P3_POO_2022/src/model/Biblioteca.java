@@ -16,8 +16,16 @@ public class Biblioteca {
 
     private int totalLivrosNasEstantes;  // contador para o total de livros nas estantes da biblioteca
 
+    private int totalUsuariosCadastrados;
+
+    private Map<Livro, Integer> qntdPorLivro; // map que controla a quantidade por livro
+
+    private Map<Pessoa, Integer> qntdLivrosDevidos;
+
     public Biblioteca(){
         this.usuarioByCpf = new HashMap<>();
+        this.qntdPorLivro = new HashMap<>();
+        this.qntdLivrosDevidos = new HashMap<>();
     }
 
     /**
@@ -33,7 +41,8 @@ public class Biblioteca {
 
         if (usuarioExistente == null) {
             // o usuário informado é novo; vamos cadastrá-lo
-            // ToDo IMPLEMENT ME!!
+            this.usuarioByCpf.put(cpf, usuario); // coloca as infos no hashmap
+            totalUsuariosCadastrados ++;
 
         } else {
             // o usuário informado já existia; vamos atualizá-lo
@@ -43,11 +52,11 @@ public class Biblioteca {
     }
 
     public Pessoa getUsuario(long cpf){
-        return null;  // ToDo IMPLEMENT ME!!
+        return this.usuarioByCpf.get(cpf);
     }
 
     public int getTotalDeUsuariosCadastrados(){
-        return 0;  // ToDo IMPLEMENT ME!!
+        return totalUsuariosCadastrados;
     }
 
     /**
@@ -58,7 +67,12 @@ public class Biblioteca {
      *                   daquele livro na biblioteca (se o livro já existir na biblioteca)
      */
     public void adquirirLivro(Livro livro, int quantidade) {
-        // ToDo IMPLEMENT ME!!
+        if (quantidade <= 0){
+            return;
+        }
+        int qtdAtual = this.qntdPorLivro.getOrDefault(livro, 0);
+        this.qntdPorLivro.put(livro, qtdAtual + quantidade);
+        this.totalLivrosNasEstantes += quantidade;
         // Dica: adicione um Map quantidadeByLivro como atributo de Biblioteca.
     }
 
@@ -79,7 +93,25 @@ public class Biblioteca {
      */
     public boolean emprestarLivro(Livro livro, Pessoa usuario)
             throws UsuarioNaoCadastradoException, LimiteEmprestimosExcedidoException {
-        return false;  // ToDo IMPLEMENT ME!!
+            if(!this.usuarioByCpf.containsKey(usuario.getCpf())) { // se o usuario nao tiver cpf/nao for cadastrado
+                throw new UsuarioNaoCadastradoException("Usuário não está cadastrado no sistema!!");
+            }
+            if(getQuantidadeDeLivrosDevidos(usuario) >= MAX_LIVROS_DEVIDOS_POR_USUARIO){ // usuario deve livros demais ja
+                throw new LimiteEmprestimosExcedidoException("Usuário atingiu o limite de livros devidos!!");
+            }
+            int estoqueAtual = getQuantidadeDeLivrosNasEstantes(livro);
+            if(estoqueAtual < MIN_COPIAS_PARA_PODER_EMPRESTAR){
+                return false; // nao tem nenhum livro desse no estoque
+            }
+
+            this.qntdPorLivro.put(livro, estoqueAtual-1);
+            this.totalLivrosNasEstantes--;
+            int livrosJaTinha = this.qntdLivrosDevidos.getOrDefault(usuario, 0);
+            this.qntdLivrosDevidos.put(usuario, livrosJaTinha+1);
+
+
+        return true;
+
     }
 
     /**
@@ -92,19 +124,28 @@ public class Biblioteca {
      *                                    ou o livro não esteja emprestado para o usuário informado
      */
     public void receberDevolucaoLivro(Livro livro, Pessoa usuario) throws DevolucaoInvalidaException {
-        // ToDo IMPLEMENT ME!!
+
+        int livrosJaTinha = this.qntdLivrosDevidos.getOrDefault(usuario, 0);
+        if(livrosJaTinha <= 0){
+            throw new DevolucaoInvalidaException();
+        }
+
+        this.qntdLivrosDevidos.put(usuario, livrosJaTinha -1);
+        int estoqueAtualLivro = getQuantidadeDeLivrosNasEstantes(livro);
+        this.qntdPorLivro.put(livro, estoqueAtualLivro+1);
+        this.totalLivrosNasEstantes++;
     }
 
     public int getQuantidadeDeLivrosDevidos(Pessoa usuario) {
-        return 0;  // ToDo IMPLEMENT ME!!
+        return this.qntdLivrosDevidos.getOrDefault(usuario, 0);
     }
 
-    public int getQuantidadeDeLivrosNasEstantes() {
+    public int getQuantidadeDeLivrosNasEstantes() { // se não colocar parâmetro, ele retorna o numero total de livros no geral
         // ****** NÃO MODIFIQUE ESSE MÉTODO! ******
         return totalLivrosNasEstantes;
     }
 
-    public int getQuantidadeDeLivrosNasEstantes(Livro livro) {
-        return 0;  // ToDo IMPLEMENT ME!!
+    public int getQuantidadeDeLivrosNasEstantes(Livro livro) { // se colocar parâmetro, ele retorna o total DAQUELE livro
+        return this.qntdPorLivro.getOrDefault(livro, 0);
     }
 }

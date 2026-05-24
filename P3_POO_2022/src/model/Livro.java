@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Livro {
 
     public enum TipoDeLivro {
@@ -56,5 +58,12 @@ public class Livro {
         result = 31 * result + autor.hashCode();
         result = 31 * result + tipo.hashCode();
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Livro livro = (Livro) o;
+        return anoDePublicacao == livro.anoDePublicacao && Objects.equals(titulo, livro.titulo) && Objects.equals(autor, livro.autor) && tipo == livro.tipo;
     }
 }

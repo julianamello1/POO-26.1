@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Pessoa {
 
     private final long cpf;
@@ -29,5 +31,17 @@ public class Pessoa {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return cpf == pessoa.cpf;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(cpf);
     }
 }
