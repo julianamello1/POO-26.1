@@ -9,6 +9,11 @@ public class Selo implements Colecionavel {
         return 0;  // faz-se uma conta envolvendo o país do selo, etc.
     }
 
+    @Override
+    public TipoDeColecionavel getTipo() {
+        return TipoDeColecionavel.COMUM;
+    }
+
     public String getTexto() {
         return null;  // ToDO IMPLEMENT ME
     }

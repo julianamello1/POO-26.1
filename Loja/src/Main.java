@@ -1,10 +1,12 @@
 package src;
+import src.Produto;
+import src.Loja;
 
 public class Main {
     public static void main(String[] args) {
 
         Transportadora trasportadorinha = new Transportadora();
-        LojaPix lojinha = new LojaPix (trasportadorinha);
+        LojaPix lojinha = new src.LojaPix(trasportadorinha);
 
 
         Produto notebookGamer = new Produto(1500, "notebook gamer", "GusBom");
