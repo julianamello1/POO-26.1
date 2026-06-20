@@ -4,9 +4,20 @@ public class Selo implements Colecionavel {
 
     private String pais;
 
+    private int posicao;
+
+    public Selo (String pais, int posicao, float valorMonetario){
+        this.pais = pais;
+        this.posicao = posicao;
+        this.valorMonetario = valorMonetario;
+    }
+
+    @Override
     public int getPosicao() {
         // ToDo IMPLEMENT ME
-        return 0;  // faz-se uma conta envolvendo o país do selo, etc.
+        return this.posicao;
+        // faz-se uma conta envolvendo o país do selo, etc.
+        // nao entendi isso ^ que o professor colocou
     }
 
     @Override
@@ -14,12 +25,12 @@ public class Selo implements Colecionavel {
         return TipoDeColecionavel.COMUM;
     }
 
+    @Override
     public String getTexto() {
-        return null;  // ToDO IMPLEMENT ME
+        return "Selo do país " + pais + "com valor de R$ " + valorMonetario;
     }
 
     public float getValorMonetario() {
-        return 0;
-        // ToDo IMPLEMENT ME
+        return this.valorMonetario;
     }
 }

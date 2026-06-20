@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Album<Figurinha> albumDaCopa = new Album(994);
 
-        Figurinha fig = new Figurinha(15, "Fulano");
+        Figurinha fig = new Figurinha(15, "Fulano", TipoDeColecionavel.COMUM);
         albumDaCopa.receberNovoItem(fig);
 
         Figurinha f = albumDaCopa.getItemDaPosicao(100);
