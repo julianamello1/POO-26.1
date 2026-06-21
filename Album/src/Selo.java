@@ -14,7 +14,6 @@ public class Selo implements Colecionavel {
 
     @Override
     public int getPosicao() {
-        // ToDo IMPLEMENT ME
         return this.posicao;
         // faz-se uma conta envolvendo o país do selo, etc.
         // nao entendi isso ^ que o professor colocou
@@ -27,7 +26,7 @@ public class Selo implements Colecionavel {
 
     @Override
     public String getTexto() {
-        return "Selo do país " + pais + "com valor de R$ " + valorMonetario;
+        return "Selo do país " + pais + " com valor de R$ " + valorMonetario;
     }
 
     public float getValorMonetario() {

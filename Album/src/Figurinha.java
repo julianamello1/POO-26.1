@@ -14,6 +14,7 @@ public class Figurinha implements Colecionavel {
         this.tipo = tipo;
     }
 
+    @Override
     public int getPosicao() {
         return posicao;
     }
@@ -23,6 +24,7 @@ public class Figurinha implements Colecionavel {
         return this.tipo;
     }
 
+    @Override
     public String getTexto() {
         return texto;
     }

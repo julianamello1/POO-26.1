@@ -7,17 +7,19 @@ public class Main {
         Figurinha fig = new Figurinha(15, "Fulano", TipoDeColecionavel.COMUM);
         albumDaCopa.receberNovoItem(fig);
 
-        Figurinha f = albumDaCopa.getItemDaPosicao(100);
-        System.out.println(f.getTexto());
+        albumDaCopa.getItemDaPosicao(100);
+
+        System.out.println(fig.getTexto());
 
 
         Album<Selo> albumDeSelos = new Album(220);
 
-        Selo selo = new Selo();
+        Selo selo = new Selo("Brasil", 14, 60.0F);
         albumDeSelos.receberNovoItem(selo);
 
-        Selo s = albumDeSelos.getItemDaPosicao(100);
-        System.out.println(s.getTexto());
+        albumDeSelos.getItemDaPosicao(100);
+
+        System.out.println(selo.getTexto());
 
 
     }

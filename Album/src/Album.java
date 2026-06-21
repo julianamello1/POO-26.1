@@ -13,6 +13,7 @@ public class Album<T extends Colecionavel> {
     public Album(int tamanho) {
 //        itens = new Figurinha[tamanho + 1];  // end direto, sem usar a posição 0
         itemPorPosicao = new HashMap<>();
+        contRepetidasPorPosicao = new HashMap<>();
         this.tamanho = tamanho;
     }
 
@@ -21,11 +22,21 @@ public class Album<T extends Colecionavel> {
     }
 
     public void receberNovoItem(T item) {
-        boolean ehRepetido = itemPorPosicao.containsKey(item.getPosicao());
+        if (itemPorPosicao.containsKey(item.getPosicao())){
+            // se já tem esse item
+            int quantidadeAtual = contRepetidasPorPosicao.getOrDefault(item.getPosicao(), 0); // vai pegar o valor da chave(posicao) ou 0
+            contRepetidasPorPosicao.put(item.getPosicao(), quantidadeAtual+1);
+            // se coloca na chave da posicao e incrementa a quantidade de repetidas daquela posicao
+        } else {
+            itemPorPosicao.put((item.getPosicao()), item); // se nao for repetido, só coloca no album mesmo
+        }
     }
 
     public T getItemDaPosicao(int posicao) {
-        return itemPorPosicao.get(posicao);
+        if (itemPorPosicao.containsKey(posicao)) { // se o hashmap tiver essa chave (posicao)
+            return itemPorPosicao.get(posicao);  // isso retorna o item que está na posição pedida (o get pega na posicao), ou seja, ele usa o "posicao" como chave
+        }
+        throw new RuntimeException("Não existem itens nessa posição :(");
     }
 
     public float venderRepetidos(int posicao, int quantidade) {
@@ -71,7 +82,7 @@ public class Album<T extends Colecionavel> {
             throw new RuntimeException("Não existem itens nessa posição :(");
         }
         // verifica quantas repetidas existem para essa posição
-        Integer repetidasDisponiveis = contRepetidasPorPosicao.get(posicao);
+        Integer repetidasDisponiveis = getRepetidas(posicao); // contRepetidasPorPosicao.get(posicao);
         if (repetidasDisponiveis == null) {
             repetidasDisponiveis = 0;
         }
@@ -111,10 +122,10 @@ public class Album<T extends Colecionavel> {
     // recebe TipoDeColecionavel como parâmetro e retorna o valor de todos os itens repetidos do tipo informado
     public float venderRepetidos(TipoDeColecionavel tipo){
         double valorTotalTipo = 0;
-        // lista que vai guardar as posições pra zerar no final
-        java.util.ArrayList<Integer> posicoesVendidas = new ArrayList<>();
+        // usa uma lista só com as chaves que vai remover depois
+        java.util.ArrayList<Integer> posicoesParaRemover = new ArrayList<>();
 
-        // percorre todas as posições
+        // percorre todas as posições pra calcular valor e identificar as posições
         for (int posicao : contRepetidasPorPosicao.keySet()){
             T item = itemPorPosicao.get(posicao);
 
@@ -125,15 +136,30 @@ public class Album<T extends Colecionavel> {
 
                 valorTotalTipo += precoUnitario * quantidade;
 
-                posicoesVendidas.add(posicao);
+                // se for, marca a posição pra vender depois
+                posicoesParaRemover.add(posicao);
 
             }
         }
 
-        for (int posicao : posicoesVendidas){
-            posicoesVendidas.remove(posicao);
+        // depois do primeiro loop terminar, pode ir removendo
+        for (int posicao : posicoesParaRemover){
+            contRepetidasPorPosicao.remove(posicao); // remove da lista de repetidas
         }
 
         return (float) valorTotalTipo;
+    }
+
+    public int getRepetidas(int posicao) {
+        return contRepetidasPorPosicao.getOrDefault(posicao, 0);
+    }
+
+    public int getTotalRepetidas() {
+        int total = 0;
+        // percorre todos os valores do mapa de repetidas e soma pra ver se todos eles (vulgo quantidade de figuriunhas repetidas pela posição = 0)
+        for (int quantidade : contRepetidasPorPosicao.values()){
+            total += quantidade;
+        }
+        return total;
     }
 }
